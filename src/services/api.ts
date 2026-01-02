@@ -4,6 +4,7 @@ const BASE_URL = import.meta.env.VITE_API_URL ;
 export const apiFetch = async (url: string, options: any = {}) => {
     const headers = {
         "Content-Type": "application/json",
+        "X-API-Key": import.meta.env.VITE_API_KEY,
         ...options.headers,
     };
 
