@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { getExercises, postExercise } from "../services/api";
-import React from "react";
 import "../css/CreateExercise.css";
 
 interface Exercise {

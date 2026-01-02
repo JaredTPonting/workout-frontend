@@ -4,7 +4,6 @@ import {
     getExercises,
     getSetsByExercise,
 } from "../services/api";
-import React from "react";
 
 
 interface Exercise {

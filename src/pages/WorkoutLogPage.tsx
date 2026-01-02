@@ -1,4 +1,4 @@
-import React, { useState }  from "react";
+import { useState }  from "react";
 
 import WorkoutForm from "../components/WorkoutForm.tsx";
 import AddExercise from "../components/AddExercise.tsx"

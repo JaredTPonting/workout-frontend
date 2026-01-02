@@ -1,10 +1,6 @@
-import { useEffect, useState } from "react";
-import {
-    getExercises,
-    getWorkoutByDate,
-    postSet,
-} from "../services/api";
-import { WeightUnit } from "../types";
+import {useEffect, useState} from "react";
+import {getExercises, getWorkoutByDate, postSet,} from "../services/api";
+import {WeightUnit} from "../types";
 
 interface SetData {
     exerciseId: number;
@@ -62,7 +58,7 @@ const WorkoutForm = () => {
     const handleChange = (
         index: number,
         field: keyof SetData,
-        value: string | WeightUnit
+        value: string | WeightUnit | number
     ) => {
         const newSets = [...sets];
         newSets[index] = { ...newSets[index], [field]: value };
