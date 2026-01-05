@@ -1,0 +1,71 @@
+.outercontainer {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.outercontainer h2 {
+    text-align: center;
+    margin: 0;
+}
+
+.workout-log-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.workout-log-container h1,
+.workout-log-container h2,
+.workout-log-container h3 {
+    text-align: center;
+    margin: 0;
+}
+
+
+
+.workout-log-container input,
+.workout-log-container select,
+.workout-log-container button {
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 1rem;
+    background-color: #374151;
+    color: #f9fafb;
+}
+
+.workout-log-container input[type="number"] {
+    width: 100%;
+}
+
+.workout-log-container button {
+    cursor: pointer;
+    background-color: #2563eb;
+    color: white;
+    transition: background 0.2s ease;
+}
+
+.workout-log-container button:hover {
+    background-color: #1d4ed8;
+}
+
+.set-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.existing-set {
+    padding: 0.5rem;
+    border-radius: 8px;
+    background-color: #1f2937;
+    margin-bottom: 0.25rem;
+}

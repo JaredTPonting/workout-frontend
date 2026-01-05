@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {getExercises, getWorkoutByDate, postSet,} from "../services/api";
 import {WeightUnit} from "../types";
+import "../css/workoutLog.css";
 
 interface SetData {
     exerciseId: number;
@@ -100,10 +101,9 @@ const WorkoutForm = () => {
     };
 
     return (
-        <div style={{ padding: "1rem", maxWidth: "800px" }}>
+        <div className="workout-log-container">
             <h2>Log Workout</h2>
 
-            {/* Date Picker */}
             <div style={{ marginBottom: "1rem" }}>
                 <label>
                     Date:{" "}
@@ -120,7 +120,7 @@ const WorkoutForm = () => {
                 <>
                     <h3>Existing Sets for {date}</h3>
                     {existingSets.map((s, i) => (
-                        <div key={i}>
+                        <div key={i} className="existing-set">
                             {exercises.find((ex) => ex.id === s.exerciseId)?.name || "Exercise"}:{" "}
                             {s.reps} reps x {s.weight} {s.unit}
                         </div>
@@ -130,14 +130,7 @@ const WorkoutForm = () => {
 
             {/* Column labels */}
             {sets.length > 0 && (
-                <div
-                    style={{
-                        display: "grid",
-                        gridTemplateColumns: "2fr 1fr 1fr 1fr",
-                        fontWeight: "bold",
-                        marginBottom: "0.5rem",
-                    }}
-                >
+                <div className="set-grid" style={{ fontWeight: "bold" }}>
                     <span>Exercise</span>
                     <span>Reps</span>
                     <span>Weight</span>
@@ -147,16 +140,7 @@ const WorkoutForm = () => {
 
             {/* Set rows */}
             {sets.map((set, i) => (
-                <div
-                    key={i}
-                    style={{
-                        display: "grid",
-                        gridTemplateColumns: "2fr 1fr 1fr 1fr",
-                        gap: "0.5rem",
-                        marginBottom: "0.5rem",
-                        alignItems: "center",
-                    }}
-                >
+                <div key={i} className="set-grid">
                     <select
                         value={set.exerciseId}
                         onChange={(e) =>
@@ -205,6 +189,7 @@ const WorkoutForm = () => {
             </div>
         </div>
     );
+
 };
 
 export default WorkoutForm;

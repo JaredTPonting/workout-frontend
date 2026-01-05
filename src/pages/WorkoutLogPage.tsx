@@ -3,16 +3,18 @@ import { useState }  from "react";
 import WorkoutForm from "../components/WorkoutForm.tsx";
 import AddExercise from "../components/AddExercise.tsx"
 
+import "../css/workoutLog.css";
+
 const WorkoutLogPage = () => {
-  const [refreshKey, setRefreshKey] = useState(0); // Simple way to refresh WorkoutForm
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const handleNewExercise = () => {
     setRefreshKey((k) => k + 1);
   };
 
   return (
-    <div>
-      <h1>Workout Tracker</h1>
+    <div className="outercontainer">
+        <h2>Create Exercise</h2>
       <AddExercise onAdd={handleNewExercise} />
       <WorkoutForm key={refreshKey} />
     </div>
