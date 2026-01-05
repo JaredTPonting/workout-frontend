@@ -1,0 +1,20 @@
+.set-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0.4rem 0;
+}
+
+.set-delete {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    font-size: 1.1rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.set-delete:hover {
+    color: #ef4444;
+}

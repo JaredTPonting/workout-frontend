@@ -26,6 +26,12 @@ export const getExerciseById = (id: number) => apiFetch(`exercises/${id}/`);
 export const postExercise = (data: { name: string }) =>
     apiFetch("exercises/", { method: "POST", body: JSON.stringify(data) });
 
+export const deleteExercise = (exerciseId: number) => {
+    apiFetch(`exercises/${exerciseId}`, {
+        method: "DELETE"
+    })
+}
+
 // workouts
 export const getWorkouts = () => apiFetch("workouts/");
 export const getWorkoutById = (id: number) => apiFetch(`workouts/${id}/`);

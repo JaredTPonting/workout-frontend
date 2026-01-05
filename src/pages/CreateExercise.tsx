@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getExercises, postExercise } from "../services/api";
+import { getExercises, postExercise, deleteExercise } from "../services/api";
 import "../css/CreateExercise.css";
 
 interface Exercise {
@@ -30,6 +30,17 @@ const CreateExercise = () => {
         fetchExercises();
     };
 
+    const handleDelete = async (exerciseId: number) => {
+        const confirmed = window.confirm(
+            "Are you sure you want to delete this exercise? This can not be undone."
+        );
+
+        if (!confirmed) return;
+
+        await deleteExercise(exerciseId);
+        fetchExercises();
+    }
+
     return (
         <div className="create-exercise-container">
             <h2>Add New Exercise</h2>
@@ -47,7 +58,15 @@ const CreateExercise = () => {
             <h3>Exercises</h3>
             <ul className="exercise-list">
                 {exercises.map((exercise) => (
-                    <li key={exercise.id}>{exercise.name}</li>
+                    <li key={exercise.id} className="exercise-item">
+                        <span>{exercise.name}</span>
+                        <button
+                            className="delete-btn"
+                            onClick={() => handleDelete(exercise.id)}
+                        >
+                            ✕
+                        </button>
+                    </li>
                 ))}
             </ul>
         </div>

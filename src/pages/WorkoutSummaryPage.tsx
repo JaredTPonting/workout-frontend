@@ -3,7 +3,10 @@ import {
     getWorkoutByDate,
     getExercises,
     getSetsByWorkout,
+    deleteSet,
 } from "../services/api";
+
+import "../css/workoutSummary.css";
 
 
 
@@ -40,6 +43,13 @@ const WorkoutSummaryPage = () => {
             .then(setExercises)
             .catch(() => setExercises([]));
     }, []);
+
+    const handleDeleteSet = async (setId: number) => {
+        if (!window.confirm("Delete this set?")) return;
+
+        await deleteSet(setId);
+        setSets((prev) => prev.filter((s) => s.id !==setId))
+    }
 
 
     const loadWorkout = async () => {
@@ -127,9 +137,13 @@ const WorkoutSummaryPage = () => {
                             <h4>{exerciseName(Number(exerciseId))}</h4>
 
                             {sets.map((s, i) => (
-                                <div key={s.id}>
-                                    Set {i + 1}: {s.reps} reps × {s.weight}{" "}
-                                    {s.unit}
+                                <div key={s.id} className="set-row">
+                                    <span>
+                                        Set {i + 1}: {s.reps} reps × {s.weight} {s.unit}
+                                    </span>
+                                    <button className="set-delete" onClick={() => handleDeleteSet(s.id)} aria-label="Delete set">
+                                        ×
+                                    </button>
                                 </div>
                             ))}
                         </div>
