@@ -42,7 +42,7 @@
     justify-content: space-between;
 
     padding: 0.75rem 1rem;
-    background-color: #1f2937; /* Dark card */
+    background-color: #1f2937;
     border-radius: 12px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
@@ -51,5 +51,46 @@
 .input-row button {
     min-width: 80px;
 }
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal {
+    background-color: #1f2937;
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.modal h3 {
+    margin: 0;
+    text-align: center;
+}
+
+.modal input {
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: none;
+    background-color: #374151;
+    color: white;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
 
 

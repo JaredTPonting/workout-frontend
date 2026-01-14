@@ -20,7 +20,12 @@ const WorkoutForm = () => {
 
     // Load exercises on mount
     useEffect(() => {
-        getExercises().then(setExercises);
+        getExercises().then((data) => {
+            const sorted = [...data].sort((a, b) =>
+                a.name.localeCompare(b.name)
+            );
+            setExercises(sorted);
+        });
     }, []);
 
     // Load workout sets for the selected date
