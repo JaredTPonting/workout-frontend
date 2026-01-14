@@ -27,7 +27,10 @@ const ExerciseSummaryPage = () => {
 
     useEffect(() => {
         getExercises()
-            .then(setExercises)
+            .then((data) => {
+                const sorted = [...data].sort((a, b) => a.name.localeCompare(b.name));
+                setExercises(sorted);
+            })
             .catch(() => setExercises([]));
     }, []);
 
