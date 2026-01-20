@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Search, Trash2 } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 import {
     getWorkoutByDate,
     getExercises,
@@ -25,6 +26,7 @@ interface Workout {
 
 const WorkoutSummaryPage = () => {
     const navigate = useNavigate();
+    const { isGuest } = useAuth();
     const [date, setDate] = useState(
         new Date().toISOString().slice(0, 10)
     );
@@ -42,6 +44,7 @@ const WorkoutSummaryPage = () => {
     }, []);
 
     const handleDeleteSet = async (setId: number) => {
+        if (isGuest) return;
         if (!window.confirm("Delete this set?")) return;
 
         await deleteSet(setId);
@@ -134,13 +137,15 @@ const WorkoutSummaryPage = () => {
                                     <span>
                                         Set {i + 1}: <strong>{s.reps} reps</strong> × <strong>{s.weight} {s.unit}</strong>
                                     </span>
-                                    <button
-                                        className="set-delete"
-                                        onClick={() => handleDeleteSet(s.id)}
-                                        aria-label="Delete set"
-                                    >
-                                        <Trash2 size={16} />
-                                    </button>
+                                    {!isGuest && (
+                                        <button
+                                            className="set-delete"
+                                            onClick={() => handleDeleteSet(s.id)}
+                                            aria-label="Delete set"
+                                        >
+                                            <Trash2 size={16} />
+                                        </button>
+                                    )}
                                 </div>
                             ))}
                         </div>
