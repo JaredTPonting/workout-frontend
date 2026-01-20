@@ -1,0 +1,94 @@
+.exercise-summary-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.exercise-summary-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Exercise selector */
+.exercise-selector {
+    margin-bottom: 2rem;
+}
+
+.exercise-selector select {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Status messages */
+.status-message {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+}
+
+/* Latest session card */
+.latest-session-card {
+    background: var(--gradient-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.latest-session-card h3 {
+    margin: 0 0 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.latest-session-card h3 .date-badge {
+    background: var(--gradient-orange);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: white;
+    -webkit-text-fill-color: white;
+}
+
+.session-set {
+    padding: 0.5rem 0;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.session-set:last-child {
+    border-bottom: none;
+}
+
+.session-set strong {
+    color: var(--text-primary);
+}
+
+/* Charts container */
+.charts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.chart-card {
+    background: var(--gradient-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    overflow: hidden;
+}
+
+.chart-card h3 {
+    margin: 0 0 1rem 0;
+    padding: 0 0.5rem;
+    font-size: 1rem;
+}
+
+/* Override Plotly styles for dark theme */
+.chart-card .js-plotly-plot .plotly {
+    background: transparent !important;
+}
