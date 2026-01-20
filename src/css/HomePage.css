@@ -5,6 +5,59 @@
     align-items: center;
     min-height: 100vh;
     padding: 2rem 1rem;
+    position: relative;
+}
+
+/* Auth badge */
+.auth-badge-container {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.auth-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.auth-badge--guest {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--accent-orange);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.auth-badge--authenticated {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--accent-green);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.logout-btn:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--border-color-light);
+    color: var(--text-primary);
 }
 
 .home-title {
@@ -133,4 +186,34 @@
 .home-btn-label {
     font-size: 1rem;
     font-weight: 500;
+}
+
+/* Disabled state for guests */
+.home-btn--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.home-btn--disabled:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--border-color);
+}
+
+.home-btn--disabled:hover::before {
+    opacity: 0;
+}
+
+.home-btn--disabled .home-btn-icon {
+    color: var(--text-muted);
+}
+
+.home-btn--disabled:hover .home-btn-icon {
+    transform: none;
+}
+
+.home-btn-locked {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
 }

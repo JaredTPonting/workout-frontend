@@ -1,23 +1,39 @@
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route } from "react-router-dom";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 
-import WorkoutLogPage from "../src/pages/WorkoutLogPage.tsx"
-import HomePage from "./pages/HomePage.tsx";
-import CreateExercise from "./pages/CreateExercise.tsx";
-import WorkoutSummaryPage from "./pages/WorkoutSummaryPage.tsx";
-import ExerciseSummaryPage from "./pages/ExerciseSummaryPage.tsx";
+import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
+import WorkoutLogPage from "./pages/WorkoutLogPage";
+import CreateExercise from "./pages/CreateExercise";
+import WorkoutSummaryPage from "./pages/WorkoutSummaryPage";
+import ExerciseSummaryPage from "./pages/ExerciseSummaryPage";
 
+function AppRoutes() {
+    const { isAuthenticated, isGuest } = useAuth();
 
-function App() {
-  return (
-    <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/add-set" element={<WorkoutLogPage />} />
-        <Route path = "/create-exercise" element={<CreateExercise />} />
-        <Route path = "/workout-summary" element={<WorkoutSummaryPage />} />
-        <Route path = "/exercise-summary" element={<ExerciseSummaryPage />} />
-        <Route path="*" element={<HomePage />} />
-    </Routes>
-  );
+    // Show login page if not authenticated and not a guest
+    if (!isAuthenticated && !isGuest) {
+        return <LoginPage />;
+    }
+
+    return (
+        <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/add-set" element={<WorkoutLogPage />} />
+            <Route path="/create-exercise" element={<CreateExercise />} />
+            <Route path="/workout-summary" element={<WorkoutSummaryPage />} />
+            <Route path="/exercise-summary" element={<ExerciseSummaryPage />} />
+            <Route path="*" element={<HomePage />} />
+        </Routes>
+    );
 }
 
-export default App
+function App() {
+    return (
+        <AuthProvider>
+            <AppRoutes />
+        </AuthProvider>
+    );
+}
+
+export default App;
