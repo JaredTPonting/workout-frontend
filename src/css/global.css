@@ -1,3 +1,64 @@
+/* ===================================
+   CSS Variables - Design Tokens
+   =================================== */
+:root {
+    /* Base colors */
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-tertiary: #334155;
+
+    /* Text colors */
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+
+    /* Accent colors */
+    --accent-blue: #3b82f6;
+    --accent-blue-hover: #2563eb;
+    --accent-purple: #8b5cf6;
+    --accent-purple-hover: #7c3aed;
+    --accent-green: #10b981;
+    --accent-green-hover: #059669;
+    --accent-orange: #f59e0b;
+    --accent-orange-hover: #d97706;
+    --accent-pink: #ec4899;
+    --accent-pink-hover: #db2777;
+    --accent-red: #ef4444;
+    --accent-red-hover: #dc2626;
+
+    /* Borders & shadows */
+    --border-color: #334155;
+    --border-color-light: #475569;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --shadow-glow-blue: 0 0 20px rgba(59, 130, 246, 0.3);
+    --shadow-glow-purple: 0 0 20px rgba(139, 92, 246, 0.3);
+    --shadow-glow-green: 0 0 20px rgba(16, 185, 129, 0.3);
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    --gradient-card: linear-gradient(145deg, #1e293b 0%, #172033 100%);
+    --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    --gradient-purple: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    --gradient-green: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    --gradient-orange: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+
+    /* Spacing */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.25s ease;
+    --transition-slow: 0.4s ease;
+}
+
+/* ===================================
+   Reset & Base
+   =================================== */
 *,
 *::before,
 *::after {
@@ -7,32 +68,90 @@
 body {
     margin: 0;
     font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: #111827; /* Dark slate background */
-    color: #f9fafb; /* Off-white text */
-    line-height: 1.5;
+    background: var(--gradient-primary);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
 }
 
+/* Subtle animated background pattern */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
 
+/* ===================================
+   Typography
+   =================================== */
 h1, h2, h3, h4 {
     margin: 0 0 1rem 0;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 1.75rem;
+}
+
+h3 {
+    font-size: 1.25rem;
 }
 
 p {
     margin: 0 0 0.75rem 0;
+    color: var(--text-secondary);
 }
 
-
+/* ===================================
+   Buttons
+   =================================== */
 button {
     font-family: inherit;
     font-size: 1rem;
-    padding: 0.75rem 1rem;
-    border-radius: 12px;
-    border: none;
-    background-color: #1f2937; /* Dark gray button */
-    color: #f9fafb;
+    font-weight: 500;
+    padding: 0.875rem 1.25rem;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    background: var(--gradient-card);
+    color: var(--text-primary);
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+button:hover::before {
+    opacity: 1;
 }
 
 button:active {
@@ -41,88 +160,244 @@ button:active {
 
 @media (hover: hover) {
     button:hover {
-        background-color: #374151; /* Slightly lighter hover */
+        border-color: var(--border-color-light);
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
     }
 }
 
+/* Primary button variants */
+.btn-primary {
+    background: var(--gradient-blue);
+    border: none;
+    box-shadow: var(--shadow-sm);
+}
 
+.btn-primary:hover {
+    box-shadow: var(--shadow-glow-blue);
+}
+
+.btn-success {
+    background: var(--gradient-green);
+    border: none;
+}
+
+.btn-success:hover {
+    box-shadow: var(--shadow-glow-green);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-red-hover) 100%);
+    border: none;
+}
+
+/* Icon button */
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* ===================================
+   Form Elements
+   =================================== */
 input,
 select {
     font-family: inherit;
     font-size: 1rem;
-    padding: 0.6rem 0.75rem;
-    border-radius: 10px;
-    border: 1px solid #374151; /* Darker border for dark mode */
-    background-color: #1f2937; /* match background slightly darker */
-    color: #f9fafb;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
     width: 100%;
+    transition: all var(--transition-fast);
 }
 
 input::placeholder {
-    color: #9ca3af; /* subtle placeholder */
+    color: var(--text-muted);
 }
 
 input:focus,
 select:focus {
     outline: none;
-    border-color: #f9fafb; /* highlight on focus */
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 
+select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
+}
 
+/* ===================================
+   Layout
+   =================================== */
 .container {
     max-width: 900px;
     margin: 0 auto;
     padding: 1.5rem 1rem;
 }
 
-/* Card for grouping content */
+/* Card component */
 .card {
-    background-color: #1f2937;
-    border-radius: 16px;
-    padding: 1.25rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    background: var(--gradient-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(10px);
+    transition: all var(--transition-normal);
 }
 
+.card:hover {
+    border-color: var(--border-color-light);
+}
 
+/* ===================================
+   Tables
+   =================================== */
 table {
     width: 100%;
     border-collapse: collapse;
 }
 
 th, td {
-    padding: 0.75rem;
-    border-bottom: 1px solid #374151;
+    padding: 0.875rem;
+    border-bottom: 1px solid var(--border-color);
     text-align: left;
-    color: #f9fafb;
+    color: var(--text-primary);
 }
 
 th {
     font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
 }
 
-
+/* ===================================
+   Links
+   =================================== */
 a {
-    color: #3b82f6; /* Blue accent */
+    color: var(--accent-blue);
     text-decoration: none;
+    transition: color var(--transition-fast);
 }
 
 a:hover {
+    color: var(--accent-blue-hover);
     text-decoration: underline;
 }
 
+/* ===================================
+   Scrollbar
+   =================================== */
 ::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #111827;
+    background: var(--bg-primary);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #374151;
+    background: var(--border-color);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #4b5563;
+    background: var(--border-color-light);
+}
+
+/* ===================================
+   Utilities
+   =================================== */
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: var(--text-muted);
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Page header with back button */
+.page-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.page-header h2 {
+    margin: 0;
+    flex: 1;
+    text-align: center;
+}
+
+.back-btn {
+    padding: 0.5rem;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-btn:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease forwards;
+}
+
+/* Staggered animation for lists */
+.stagger-item {
+    opacity: 0;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.stagger-item:nth-child(1) { animation-delay: 0.05s; }
+.stagger-item:nth-child(2) { animation-delay: 0.1s; }
+.stagger-item:nth-child(3) { animation-delay: 0.15s; }
+.stagger-item:nth-child(4) { animation-delay: 0.2s; }
+.stagger-item:nth-child(5) { animation-delay: 0.25s; }
+
+/* Spinner animation */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.spin {
+    animation: spin 1s linear infinite;
 }

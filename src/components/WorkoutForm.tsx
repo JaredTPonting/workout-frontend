@@ -1,6 +1,7 @@
-import {useEffect, useState} from "react";
-import {getExercises, getWorkoutByDate, postSet,} from "../services/api";
-import {WeightUnit} from "../types";
+import { useEffect, useState } from "react";
+import { Plus, Send, Calendar } from "lucide-react";
+import { getExercises, getWorkoutByDate, postSet } from "../services/api";
+import { WeightUnit } from "../types";
 import "../css/workoutLog.css";
 
 interface SetData {
@@ -18,7 +19,6 @@ const WorkoutForm = () => {
     const [sets, setSets] = useState<SetData[]>([]);
     const [existingSets, setExistingSets] = useState<SetData[]>([]);
 
-    // Load exercises on mount
     useEffect(() => {
         getExercises().then((data) => {
             const sorted = [...data].sort((a, b) =>
@@ -28,7 +28,6 @@ const WorkoutForm = () => {
         });
     }, []);
 
-    // Load workout sets for the selected date
     useEffect(() => {
         getWorkoutByDate(date)
             .then((workout: any) => {
@@ -87,7 +86,6 @@ const WorkoutForm = () => {
             alert("Workout submitted");
             setSets([]);
 
-            // Refresh existing sets
             getWorkoutByDate(date).then((workout: any) => {
                 if (workout?.sets) {
                     const formattedSets = workout.sets.map((s: any) => ({
@@ -106,34 +104,31 @@ const WorkoutForm = () => {
     };
 
     return (
-        <div className="workout-log-container">
-            <h2>Log Workout</h2>
+        <div className="workout-log-container card">
+            <h2>Log Sets</h2>
 
-            <div style={{ marginBottom: "1rem" }}>
-                <label>
-                    Date:{" "}
-                    <input
-                        type="date"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                    />
-                </label>
+            <div className="date-input-wrapper">
+                <Calendar size={18} style={{ color: "var(--text-muted)" }} />
+                <label>Date:</label>
+                <input
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                />
             </div>
 
-            {/* Existing Sets */}
             {existingSets.length > 0 && (
                 <>
                     <h3>Existing Sets for {date}</h3>
                     {existingSets.map((s, i) => (
                         <div key={i} className="existing-set">
                             {exercises.find((ex) => ex.id === s.exerciseId)?.name || "Exercise"}:{" "}
-                            {s.reps} reps x {s.weight} {s.unit}
+                            <strong>{s.reps} reps</strong> × <strong>{s.weight} {s.unit}</strong>
                         </div>
                     ))}
                 </>
             )}
 
-            {/* Column labels */}
             {sets.length > 0 && (
                 <div className="set-grid" style={{ fontWeight: "bold" }}>
                     <span>Exercise</span>
@@ -143,7 +138,6 @@ const WorkoutForm = () => {
                 </div>
             )}
 
-            {/* Set rows */}
             {sets.map((set, i) => (
                 <div key={i} className="set-grid">
                     <select
@@ -164,6 +158,7 @@ const WorkoutForm = () => {
                         value={set.reps}
                         onChange={(e) => handleChange(i, "reps", e.target.value)}
                         min={0}
+                        placeholder="0"
                     />
 
                     <input
@@ -171,6 +166,7 @@ const WorkoutForm = () => {
                         value={set.weight}
                         onChange={(e) => handleChange(i, "weight", e.target.value)}
                         min={0}
+                        placeholder="0"
                     />
 
                     <select
@@ -185,16 +181,18 @@ const WorkoutForm = () => {
                 </div>
             ))}
 
-            {/* Actions */}
-            <div style={{ marginTop: "1rem" }}>
-                <button onClick={addSet}>Add Set</button>
-                <button onClick={handleSubmit} style={{ marginLeft: "1rem" }}>
+            <div className="workout-actions">
+                <button onClick={addSet} className="btn-add-set">
+                    <Plus size={18} />
+                    Add Set
+                </button>
+                <button onClick={handleSubmit} className="btn-submit">
+                    <Send size={18} />
                     Submit Workout
                 </button>
             </div>
         </div>
     );
-
 };
 
 export default WorkoutForm;

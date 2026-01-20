@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft, Search, Trash2 } from "lucide-react";
 import {
     getWorkoutByDate,
     getExercises,
@@ -7,8 +9,6 @@ import {
 } from "../services/api";
 
 import "../css/workoutSummary.css";
-
-
 
 interface WorkoutSet {
     id: number;
@@ -23,9 +23,8 @@ interface Workout {
     date: string;
 }
 
-
-
 const WorkoutSummaryPage = () => {
+    const navigate = useNavigate();
     const [date, setDate] = useState(
         new Date().toISOString().slice(0, 10)
     );
@@ -35,8 +34,6 @@ const WorkoutSummaryPage = () => {
     const [exercises, setExercises] = useState<{ id: number; name: string }[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-
-
 
     useEffect(() => {
         getExercises()
@@ -48,9 +45,8 @@ const WorkoutSummaryPage = () => {
         if (!window.confirm("Delete this set?")) return;
 
         await deleteSet(setId);
-        setSets((prev) => prev.filter((s) => s.id !==setId))
+        setSets((prev) => prev.filter((s) => s.id !== setId))
     }
-
 
     const loadWorkout = async () => {
         setLoading(true);
@@ -77,8 +73,6 @@ const WorkoutSummaryPage = () => {
         }
     };
 
-
-
     const exerciseName = (id: number) =>
         exercises.find((e) => e.id === id)?.name ?? "Unknown exercise";
 
@@ -91,58 +85,61 @@ const WorkoutSummaryPage = () => {
         {}
     );
 
-
-
     return (
-        <div style={{ padding: "2rem", maxWidth: "800px", margin: "0 auto" }}>
-            <h2>Workout Summary</h2>
+        <div className="workout-summary-container">
+            <div className="page-header">
+                <button className="back-btn" onClick={() => navigate("/")}>
+                    <ArrowLeft size={20} />
+                </button>
+                <h2>Workout Summary</h2>
+                <div style={{ width: 36 }} />
+            </div>
 
-            <div style={{ marginBottom: "1rem" }}>
+            <div className="date-picker-section">
                 <input
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
                 />
-                <button onClick={loadWorkout} style={{ marginLeft: "1rem" }}>
+                <button onClick={loadWorkout}>
+                    <Search size={18} />
                     View Workout
                 </button>
             </div>
 
-            {loading && <p>Loading...</p>}
+            {loading && <p className="status-message">Loading...</p>}
 
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
 
             {!loading && !workout && !error && (
-                <p>No workout logged for this date.</p>
+                <p className="status-message">No workout logged for this date.</p>
             )}
 
             {workout && (
                 <div>
-                    <h3>Workout on {workout.date}</h3>
+                    <p className="workout-date-title">
+                        Workout on <span>{workout.date}</span>
+                    </p>
 
                     {sets.length === 0 && (
-                        <p>No sets logged for this workout.</p>
+                        <p className="status-message">No sets logged for this workout.</p>
                     )}
 
                     {Object.entries(groupedSets).map(([exerciseId, sets]) => (
-                        <div
-                            key={exerciseId}
-                            style={{
-                                marginBottom: "1.5rem",
-                                padding: "1rem",
-                                border: "1px solid #ccc",
-                                borderRadius: "6px",
-                            }}
-                        >
+                        <div key={exerciseId} className="exercise-card">
                             <h4>{exerciseName(Number(exerciseId))}</h4>
 
                             {sets.map((s, i) => (
                                 <div key={s.id} className="set-row">
                                     <span>
-                                        Set {i + 1}: {s.reps} reps × {s.weight} {s.unit}
+                                        Set {i + 1}: <strong>{s.reps} reps</strong> × <strong>{s.weight} {s.unit}</strong>
                                     </span>
-                                    <button className="set-delete" onClick={() => handleDeleteSet(s.id)} aria-label="Delete set">
-                                        ×
+                                    <button
+                                        className="set-delete"
+                                        onClick={() => handleDeleteSet(s.id)}
+                                        aria-label="Delete set"
+                                    >
+                                        <Trash2 size={16} />
                                     </button>
                                 </div>
                             ))}
